@@ -1,0 +1,5 @@
+GET /default-headers HTTP/1.1
+Host: localhost:1234
+Date: Wed, 30 Sep 2020 20:34:59 GMT
+User-Agent: Test-Agent
+

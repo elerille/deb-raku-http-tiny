@@ -1,0 +1,27 @@
+{
+  "auth": "cpan:JJATRIA",
+  "authors": [
+    "José Joaquín Atria"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+  ],
+  "description": "A small, simple, correct HTTP/1.1 client",
+  "license": "Artistic-2.0",
+  "name": "HTTP::Tiny",
+  "perl": "6.d",
+  "provides": {
+    "HTTP::Tiny": "lib/HTTP/Tiny.rakumod"
+  },
+  "resources": [
+  ],
+  "source-url": "https://gitlab.com/jjatria/http-tiny.git",
+  "tags": [
+    "Client",
+    "HTTP"
+  ],
+  "test-depends": [
+  ],
+  "version": "0.1.6"
+}

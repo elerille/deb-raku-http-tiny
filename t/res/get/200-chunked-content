@@ -1,0 +1,15 @@
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Trailer: Expires
+
+4
+This
+8
+ is some
+14; foo="bar baz"
+ chunked
+
+content.
+0
+Expires: Wed, 21 Oct 2015 07:28:00 GMT
+

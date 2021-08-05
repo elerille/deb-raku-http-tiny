@@ -1,0 +1,5 @@
+GET /connection-close HTTP/1.1
+Host: localhost:1234
+Connection: close
+User-Agent: HTTP-Tiny
+

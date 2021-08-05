@@ -1,0 +1,10 @@
+{
+    "headers": {
+        "x-duck": "\u00F0\u009F\u00A6\u0086"
+    },
+    "protocol": "HTTP/1.1",
+    "reason": "OK",
+    "status": 200,
+    "success": true,
+    "url": "http://localhost:1234/200-opaque-header"
+}

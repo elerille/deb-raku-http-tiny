@@ -1,0 +1,13 @@
+{
+    "new": {},
+    "request": {
+        "named": {
+            "content": {
+               "foo": ["bar", "baz"],
+               "bar": 123,
+               "enc": "!*'();:@&=+$,/?#[ ]-.~_"
+            }
+        },
+        "positional": [ "POST", "http://localhost:1234/form-urlencoded" ]
+    }
+}

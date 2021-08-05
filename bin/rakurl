@@ -1,0 +1,164 @@
+#!/usr/bin/env raku
+
+use HTTP::Tiny;
+
+multi sub MAIN (
+    Bool :$version where *.so, #= Print command and compiler version
+) {
+    say "rakurl { HTTP::Tiny.^ver } on Raku {
+        $*VM.config< versionmajor versionminor >.join: '.'
+    }";
+
+    my @protos = 'http';
+    @protos.push: 'https' with HTTP::Tiny.can-ssl;
+
+    say "Protocols: { @protos.join: ' ' }";
+    return;
+}
+
+multi sub MAIN (
+    Str  $url          is copy,
+    Int  :C(:$continue-at),     #= Resume a file transfer at the given offset
+         :d(:$data),            #= Send URL encoded data
+         :F(:$form),            #= Send multipart data
+    Bool :f(:$fail),            #= Fail on HTTP errors
+         :H(:$header),          #= Set a request header
+    Bool :L(:$location),        #= Follow redirects
+    Str  :o(:$output),          #= Write to file instead of STDOUT
+    Str  :x(:$proxy),           #= Specify the proxy to use
+    Str  :r(:$range)   is copy, #= Retrieve a byte range from the server
+    Int     :$retry    = 0,     #= Specify number of retries on failed requests
+    Int     :$retry-delay,      #= Specify the seconds to wait between retries
+    Str  :X(:$request) is copy, #= The request to make
+    Str  :u(:$user)    is copy, #= Server user and password
+    Str  :A(:$user-agent),      #= Set the User-Agent to send to the server
+    Bool :v(:$verbose),         #= Print request and response
+) {
+    temp %*ENV<HTTP_TINY_DEBUG> = 1 if $verbose;
+
+    my %params;
+    for $header.List.grep: *.defined {
+        my ( $key, $value ) = .split(':', 2)».trim;
+        %params<headers> //= {};
+        %params<headers>.append: $key.lc, $value;
+    }
+
+    $request ||= $data || $form ?? 'POST' !! 'GET';
+
+    $range ||= "$_-" with $continue-at;
+    %params<headers><range> = "bytes=$_" with $range;
+
+    my $content-type := %params<headers><content-type>;
+    if $data || $form {
+        $content-type ||= 'application/x-www-form-urlencoded' if $data;
+        $content-type ||= 'multipart/form-data'               if $form;
+
+        given $content-type {
+            when 'application/x-www-form-urlencoded' | 'multipart/form-data' {
+                my %body;
+
+                for $data.List.grep: *.defined {
+                    %body.append( .key, .value ) with .&parse-form-data;
+                }
+
+                for $form.List.grep: *.defined  {
+                    %body.append( .key, .value )
+                        with .&parse-form-data: :strict;
+                }
+
+                %params<content> = %body;
+            }
+            default {
+                %params<content> = $data;
+            }
+        }
+    }
+    else {
+        %params<content> = $data;
+    }
+
+    my $ua = do {
+        my %new = ( max-redirect => $location ?? 5 !! 0 );
+        %new<agent> = $_ with $user-agent;
+        %new<proxy> = $_ with $proxy;
+
+        HTTP::Tiny.new: |%new;
+    }
+
+    if $output {
+        my $fh = open $output, :w;
+        END .close with $fh;
+
+        %params<data-callback> = sub ( $blob, $resp ) { $fh.write: $blob }
+
+        if $range {
+            my $wrap-handle;
+            $wrap-handle = %params<data-callback>.wrap: -> $blob, $resp {
+                unless $resp<status> == 206 {
+                    note Q"HTTP server doesn't seem to support byte ranges. "
+                        ~ 'Cannot resume';
+                    exit 33;
+                }
+
+                LEAVE %params<data-callback>.unwrap: $wrap-handle;
+
+                $fh.write: $blob;
+            }
+        }
+    }
+
+    if $user && not $user.contains: ':' {
+        try require ::('Terminal::Getpass') <&getpass>;
+        my $prompt = ::('Terminal::Getpass') !~~ Failure ?? &getpass !! do {
+            note 'Password WILL be displayed! '
+                ~ 'Install Terminal::Getpass to avoid this';
+            &prompt;
+        }
+
+        my $pass = $prompt.("Enter host password for user '$user': ");
+        $user ~= ":$pass";
+    }
+
+    $url .= subst: /^ ( 'http' s? '://' ) /, { "$0$user@" } if $user;
+
+    my %response;
+    my $sleep = $retry-delay // 1;
+    for 0 .. $retry -> $i {
+        %response = $ua.request: $request.uc, $url, |%params;
+
+        last if %response<status> < 500;
+
+        next unless $retry;
+
+        note "Warning: Transient HTTP error. Will retry in $_ second"
+            ~ "{ 's' if $_ != 1 }" with $sleep;
+
+        note "Warning: $_ retr{ $_ == 1 ?? 'y' !! 'ies' } left"
+            with $retry - $i;
+
+        $sleep *= 2 unless $retry-delay;
+        sleep $sleep;
+    }
+
+    if $fail && %response<status> >= 400 {
+        note "The requested URL returned error: { .<status reason>.join: ' ' }"
+            with %response;
+        exit 22;
+    }
+
+    print .decode with %response<content>;
+
+    sub parse-form-data ( Str $data, Bool :$strict --> Pair ) {
+        if $data !~~ / '=' / && $strict {
+            note 'Illegaly formatted input field!';
+            exit 2;
+        }
+
+        my ( $key, $value ) = $data.split: '=', 2;
+
+        $value //= '';
+        $value = $value.substr(1).IO if $value.starts-with: '@';
+
+        $key => $value;
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "new": {},
+    "request": {
+        "named": {},
+        "positional": [ "GET", "http://localhost:1234/basic-headers" ]
+    }
+}

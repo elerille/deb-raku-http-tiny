@@ -1,0 +1,9 @@
+{
+    "new": {},
+    "request": {
+        "named": {
+            "content": "I sing the body electric,\r\nThe armies of those I love engirth me and I engirth them,\r\nThey will not let me off till I go with them, respond to them,\r\nAnd discorrupt them, and charge them full with the charge of the soul.\r\n"
+        },
+        "positional": [ "POST", "http://localhost:1234/with-body" ]
+    }
+}

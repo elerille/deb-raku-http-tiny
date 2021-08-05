@@ -1,0 +1,18 @@
+HTTP/1.1 206 Partial Content
+Content-Type: multipart/byteranges; boundary=3d6b6a416f9b5
+Content-Length: 282
+
+--3d6b6a416f9b5
+Content-Type: text/html
+Content-Range: bytes 0-50/1270
+
+<!doctype html>
+<html>
+<head>
+    <title>Example Do
+--3d6b6a416f9b5
+Content-Type: text/html
+Content-Range: bytes 100-150/1270
+
+eta http-equiv="Content-type" content="text/html; c
+--3d6b6a416f9b5--

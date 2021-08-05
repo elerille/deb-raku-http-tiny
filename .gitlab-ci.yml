@@ -1,0 +1,19 @@
+Bare:
+  image: jraspass/raku
+  variables:
+    ONLINE_TESTING: 1
+  script: |
+    raku --version
+    zef install --deps-only --/test .
+    prove6 -l
+
+Deps:
+  image: jraspass/raku
+  variables:
+    ONLINE_TESTING: 1
+  script: |
+    raku --version
+    zef install --deps-only --/test .
+    apk add openssl-dev
+    zef install --/test 'IO::Socket::SSL:ver<0.0.2+>'
+    prove6 -l

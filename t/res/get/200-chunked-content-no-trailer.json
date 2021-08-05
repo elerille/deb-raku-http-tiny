@@ -1,0 +1,11 @@
+{
+    "content": "This is some chunked\r\n\r\ncontent.",
+    "headers": {
+        "transfer-encoding": "chunked"
+    },
+    "protocol": "HTTP/1.1",
+    "reason": "OK",
+    "status": 200,
+    "success": true,
+    "url": "http://localhost:1234/200-chunked-content-no-trailer"
+}

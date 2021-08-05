@@ -1,0 +1,7 @@
+{
+    "new": {},
+    "request": {
+        "named": {},
+        "positional": [ "GET", "http://foo:howdy%20partner@localhost:1234/basic-auth" ]
+    }
+}

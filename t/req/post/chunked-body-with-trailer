@@ -1,0 +1,12 @@
+POST /multipart-form-data HTTP/1.1
+Host: localhost:1234
+Content-Type: text/plain;charset=UTF-8
+Transfer-Encoding: chunked
+User-Agent: HTTP-Tiny
+
+C
+ABCDEFGHIJKL
+0
+
+Expires: Wed, 21 Oct 2015 07:28:00 GMT
+

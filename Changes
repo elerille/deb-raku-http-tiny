@@ -1,0 +1,49 @@
+Revision history for HTTP-Tiny
+
+0.1.6  2021-01-02T11:42:22Z
+
+    - Fixed an issue in 'mirror' when setting last-modified
+      months, which would cause an exception if the date was in
+      January. (jraspass++)
+
+0.1.5  2020-11-30T23:45:26Z
+
+    - Added a note on the documentation that mirror will not
+      create the parent directories leading to the target file.
+      The user must make sure the path exists before calling.
+    - Using mirror with the `throw-exceptions` flag enabled no
+      longer throws an error on 304 responses.
+
+0.1.4  2020-11-28T11:05:23Z
+
+    - Add --version to rakurl to print package and compiler
+      version, as well as supported protocols
+
+0.1.3  2020-11-27T21:35:48Z
+
+    - Fix an issue with the rakurl utility which made it unable
+      to set multiple headers from the command line
+    - When using --user in rakurl, use Terminal::Getpass to
+      avoid displaying user input if possible. Falls back to
+      built-in `prompt` with a notice about the password being
+      displayed
+
+0.1.2  2020-11-18T21:31:18Z
+
+    - Do not read more than the specified content-length
+      when reading responses. This issue could hang when using
+      persistent connections, introduced in 0.1.1
+
+0.1.1  2020-11-08T14:50:41Z
+
+    - Support persistent connections by default
+    - Generate User-Agent string from class name for better
+      subclass support (jraspass++)
+
+0.1.0  2020-11-01T17:51:59Z
+
+    - Decode headers as ISO-8859-1 instead of ASCII to prevent
+      exceptions on UTF-8 header values.
+
+0.0.1  2020-10-28T23:47:09Z
+    - Initial version

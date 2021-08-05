@@ -1,0 +1,21 @@
+# TODO items
+
+## Feature parity with Perl library
+
+* Optional cookie support
+* Handle EINTR errors
+* Single retry on broken socket when using idempotent methods
+  See: https://tools.ietf.org/html/rfc7230#section-6.3.1
+  (Note that this is not mandated, only recommended)
+* Timeouts
+
+## Rakuification
+
+* Improve user-experience re. exceptions: they hide the original source of the problem
+* Implement support for Channels / Supplies?
+
+## Testing
+
+The following areas have insufficient test coverage:
+
+* Streaming requests / responses

@@ -1,0 +1,12 @@
+{
+    "new": {
+        "default-headers": {
+            "USER-AGENT": "Test-Agent",
+            "date": "Wed, 30 Sep 2020 20:34:59 GMT"
+        }
+    },
+    "request": {
+        "named": {},
+        "positional": [ "GET", "http://localhost:1234/default-headers" ]
+    }
+}

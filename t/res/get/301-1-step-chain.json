@@ -1,0 +1,24 @@
+{
+    "content": "Hello World!",
+    "headers": {
+        "content-length": "12"
+    },
+    "protocol": "HTTP/1.1",
+    "reason": "OK",
+    "redirects": [
+        {
+            "content": "\n",
+            "headers": {
+                "location": "/200-with-content"
+            },
+            "protocol": "HTTP/1.1",
+            "reason": "MOVED PERMANENTLY",
+            "status": 301,
+            "success": false,
+            "url": "http://localhost:1234/301-1-step-chain"
+        }
+    ],
+    "status": 200,
+    "success": true,
+    "url": "http://localhost:1234/200-with-content"
+}

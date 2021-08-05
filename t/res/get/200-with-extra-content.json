@@ -1,0 +1,11 @@
+{
+    "content": "I like ambiguity",
+    "headers": {
+        "content-length": "16"
+    },
+    "protocol": "HTTP/1.1",
+    "reason": "OK",
+    "status": 200,
+    "success": true,
+    "url": "http://localhost:1234/200-with-extra-content"
+}

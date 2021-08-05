@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "content-type": "text/html;charset=UTF-8",
+        "date": "Wed, 30 Sep 2020 20:34:59 GMT",
+        "server": "Mojolicious (Perl)"
+    },
+    "protocol": "HTTP/1.1",
+    "reason": "No Content",
+    "status": 204,
+    "success": true,
+    "url": "http://localhost:1234/204"
+}

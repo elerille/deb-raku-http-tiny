@@ -1,0 +1,12 @@
+Source: raku-http-tiny
+Maintainer: Élerille <elerille+debian@thran.io>
+Section: interpreters
+Priority: optional
+Build-Depends: debhelper-compat (= 12), dh-perl6
+Standards-Version: 4.5.1
+
+Package: raku-http-tiny
+Architecture: all
+Depends: rakudo, ${misc:Depends}
+Description: Raku module HTTP::Tiny
+ A small, simple, correct HTTP/1.1 client

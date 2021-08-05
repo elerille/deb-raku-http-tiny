@@ -1,0 +1,9 @@
+{
+    "new": {
+        "keep-alive": false
+    },
+    "request": {
+        "named": {},
+        "positional": [ "GET", "http://localhost:1234/connection-close" ]
+    }
+}

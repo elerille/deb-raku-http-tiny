@@ -1,0 +1,9 @@
+{
+    "content": "\n",
+    "headers": { "foo": "Bar Baz" },
+    "protocol": "HTTP/1.1",
+    "reason": "OK",
+    "status": 200,
+    "success": true,
+    "url": "http://localhost:1234/200-insane-continuations"
+}

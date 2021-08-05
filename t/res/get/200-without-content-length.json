@@ -1,0 +1,9 @@
+{
+    "content": "Without a specific content length header, I should\r\nslurp ALL of this\r\n\r\n\n\n",
+    "headers": {},
+    "protocol": "HTTP/1.1",
+    "reason": "OK",
+    "status": 200,
+    "success": true,
+    "url": "http://localhost:1234/200-without-content-length"
+}

@@ -1,0 +1,35 @@
+{
+    "content": "\n",
+    "headers": {
+        "location": "/200-with-content"
+    },
+    "protocol": "HTTP/1.1",
+    "reason": "MOVED PERMANENTLY",
+    "redirects": [
+        {
+            "content": "\n",
+            "headers": {
+                "location": "/301-2-step-chain"
+            },
+            "protocol": "HTTP/1.1",
+            "reason": "MOVED PERMANENTLY",
+            "status": 301,
+            "success": false,
+            "url": "http://localhost:1234/301-3-step-chain"
+        },
+        {
+            "content": "\n",
+            "headers": {
+                "location": "/301-1-step-chain"
+            },
+            "protocol": "HTTP/1.1",
+            "reason": "MOVED PERMANENTLY",
+            "status": 301,
+            "success": false,
+            "url": "http://localhost:1234/301-2-step-chain"
+        }
+    ],
+    "status": 301,
+    "success": false,
+    "url": "http://localhost:1234/301-1-step-chain"
+}

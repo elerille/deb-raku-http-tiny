@@ -1,0 +1,15 @@
+{
+    "new": {},
+    "request": {
+        "named": {
+            "headers": {
+                "content-type": "multipart/form-data; boundary=\"ABCDE\""
+            },
+            "content": {
+               "foo": ["bar", "baz"],
+               "bar": 123
+            }
+        },
+        "positional": [ "POST", "http://localhost:1234/multipart-form-data" ]
+    }
+}

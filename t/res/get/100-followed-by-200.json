@@ -1,0 +1,11 @@
+{
+    "content": "Hello World!",
+    "headers": {
+        "content-length": "12"
+    },
+    "protocol": "HTTP/1.1",
+    "reason": "OK",
+    "status": 200,
+    "success": true,
+    "url": "http://localhost:1234/100-followed-by-200"
+}

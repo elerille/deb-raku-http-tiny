@@ -1,0 +1,5 @@
+lib/* usr/share/perl6/debian-sources/raku-http-tiny/lib
+t/* usr/share/perl6/debian-sources/raku-http-tiny/t
+META* usr/share/perl6/debian-sources/raku-http-tiny
+README* usr/share/doc/raku-http-tiny/
+bin/* usr/bin

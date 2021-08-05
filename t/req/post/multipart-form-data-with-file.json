@@ -1,0 +1,15 @@
+{
+    "new": {},
+    "request": {
+        "named": {
+            "headers": {
+                "content-type": "multipart/form-data; boundary=\"ABCDE\""
+            },
+            "content": {
+               "foo": ["bar", "baz"],
+               "file": "@t/text-file.txt"
+            }
+        },
+        "positional": [ "POST", "http://localhost:1234/multipart-form-data-with-file" ]
+    }
+}

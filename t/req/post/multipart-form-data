@@ -1,0 +1,19 @@
+POST /multipart-form-data HTTP/1.1
+Host: localhost:1234
+Content-Length: 191
+Content-Type: multipart/form-data; boundary="ABCDE"
+User-Agent: HTTP-Tiny
+
+--ABCDE
+Content-Disposition: form-data; name="bar"
+
+123
+--ABCDE
+Content-Disposition: form-data; name="foo"
+
+bar
+--ABCDE
+Content-Disposition: form-data; name="foo"
+
+baz
+--ABCDE--

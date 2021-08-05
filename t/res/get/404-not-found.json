@@ -1,0 +1,9 @@
+{
+    "content": "",
+    "headers": {},
+    "protocol": "HTTP/1.1",
+    "reason": "Not Found",
+    "status": 404,
+    "success": false,
+    "url": "http://localhost:1234/404-not-found"
+}

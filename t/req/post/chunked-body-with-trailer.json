@@ -1,0 +1,15 @@
+{
+    "new": {},
+    "request": {
+        "named": {
+            "headers": {
+                "transfer-encoding": "chunked"
+            },
+            "content": "ABCDEFGHIJKL",
+            "trailer-callback": {
+                "expires": "Wed, 21 Oct 2015 07:28:00 GMT"
+            }
+        },
+        "positional": [ "POST", "http://localhost:1234/multipart-form-data" ]
+    }
+}

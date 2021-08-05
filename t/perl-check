@@ -1,0 +1,76 @@
+#!/usr/bin/env perl
+
+use HTTP::Tiny;
+use JSON::PP;
+use Data::Dumper;
+use Test::More;
+use feature 'say';
+use autodie;
+
+my $ua = HTTP::Tiny->new( max_redirect => 2 );
+my @tests = (
+    [ GET => '/200-with-content'                        ],
+    [ GET => '/200-without-content-length'              ],
+    [ GET => '/200-with-extra-content'                  ],
+    [ GET => '/200-with-headers'                        ],
+    [ GET => '/200-insane-continuations'                ],
+    [ GET => '/200-chunked-content'                     ],
+    [ GET => '/200-chunked-content-unannounced-trailer' ],
+    [ GET => '/200-chunked-content-no-trailer'          ],
+    [ GET => '/204'                                     ],
+    [ GET => '/301-1-step-chain'                        ],
+    [ GET => '/301-2-step-chain'                        ],
+    [ GET => '/301-3-step-chain'                        ],
+);
+
+{
+    no strict 'refs';
+    no warnings 'redefine';
+
+    *{'HTTP::Tiny::Handle::can_reuse'} = sub { 0 };
+
+    *{'HTTP::Tiny::Handle::connect'} = sub {
+        my ($self, $scheme, $host, $port, $peer) = @_;
+        return $self;
+    };
+
+    *{'HTTP::Tiny::Handle::write_request'} = sub {
+        my ( $self, $req ) = @_;
+        my $file = "t/res/" . lc( $req->{method} ) . $req->{uri};
+        open $self->{fh}, '<', $file;
+        binmode $self->{fh};
+        return $self;
+    };
+}
+
+for (@tests) {
+    my ( $method, $path ) = @$_;
+    my $file  = 't/res/' . lc( $method ) . $path;
+    my $check = $file . '.json';
+
+    unless ( -e $file ) {
+        fail 'No such response file: ' . $file;
+        next;
+    }
+
+    unless ( -e $check ) {
+        fail 'No such check file: ' . $check;
+        next;
+    }
+
+    open my $fh, '<', $check or die "Cannot read from $file: $!";
+    my $json = do { local $/; decode_json <$fh> };
+
+    $json->{success} = !!$json->{success};
+    if ( $json->{redirects} ) {
+        $_->{success} = !!$_->{success} for @{ $json->{redirects} };
+    }
+
+    my $res = $ua->get( "http://localhost:1234$path" );
+    is_deeply $res, $json, "$method $path" or do {
+        require Data::Dumper;
+        diag Dumper $res;
+    };
+}
+
+done_testing;
